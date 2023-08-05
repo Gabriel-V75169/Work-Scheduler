@@ -1,8 +1,9 @@
 $(document).ready(function(){
 
-  const currentTime = dayjs().format('HH');
+  const currentTime = dayjs().format('H');
 
-  const timeShown = dayjs().format ('h a')
+
+  const timeShown = dayjs().format ('dddd, MMMM D, h a')
   
 
   $(".saveBtn").click(function() {
@@ -10,27 +11,27 @@ $(document).ready(function(){
     const theTime = $(this).parent('.time-block').attr("id");
     const siblingValue = $(this).siblings('.description').val();
 
-    localStorage.setItem(theTime, JSON.stringify(siblingValue));
+    localStorage.setItem(theTime, siblingValue);
     
   });
   $(".time-block").each(function() {
-
+    
     const id = $(this).attr('id');
     const myClass = $(this);
     
+    
 
-    if (id == currentTime) {
-      $(myClass).addClass("present");
-    } else if (id < currentTime) {
-      $(myClass).addClass("past");
-    } else {
-      $(myClass).addClass("future");
+    if (currentTime == id) {
+      $(myClass).addClass('present');
+    } 
+    else if (currentTime > id) {
+      $(myClass).addClass('past');
+    } 
+    else if (currentTime < id) {
+      $(myClass).addClass('future');
     };
-
-    if (id == localStorage.key) {
-      document.id.children("description").innerHTML = localStorage.key.val();
-    };
-
+    
+    $(this).children('.description').val(localStorage.getItem(id));
    });
  
   
